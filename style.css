@@ -4,9 +4,12 @@
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  box-sizing: inherit;
+  font: inherit;
+}
+
+html {
   --blue-background: #0000a8;
   --dark-gray-foreground: #545454;
   --gray: #a8a8a8;
@@ -14,10 +17,7 @@
   --green-foreground: #54fc54;
   --white-foreground: #fcfcfc;
   --yellow-foreground: #fcfc54;
-  font: inherit;
-}
-
-html {
+  box-sizing: border-box;
   font: 4vh "DOS", monospace;
 }
 
@@ -44,11 +44,11 @@ section h2 {
   text-align: center;
 }
 
-section form p {
+section p {
   display: contents;
 }
 
-section form p * {
+section p * {
   height: 1.2rem;
 }
 
