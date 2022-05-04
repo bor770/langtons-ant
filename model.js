@@ -14,12 +14,7 @@ const model = {
   ruleString: ``,
 
   _make2DArray(cols, rows) {
-    let arr = [];
-    for (let i = 0; i < cols; i++) {
-      arr[i] = [];
-      for (let j = 0; j < rows; arr[i][j++] = 0) /* empty */;
-    }
-    return arr;
+    return Array.from(new Array(+cols), () => Array.from(new Array(+rows), () => 0));
   },
 
   _turnLeft() {
@@ -70,7 +65,7 @@ const model = {
   },
 
   step() {
-    const rule = this.ruleString.split(``);
+    const rule = [...this.ruleString];
     if (rule[this._grid[this._x][this._y] % rule.length] === `1`) {
       this._turnRight();
     } else {

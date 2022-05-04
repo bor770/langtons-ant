@@ -13,21 +13,15 @@ const view = {
     request.send(null);
   },
 
+  _parseColor(color) {
+    // Parses a Fractint .map file
+    let rgb = color.split(` `).filter(x => !isNaN(Number.parseInt(x)));
+    return `rgb(${rgb.slice(0, 3).join(`,`)})`;
+  },
+
   _parsePalette(event) {
-    // Parses a Fractint map file
-    const colors = event.target.responseText.split(`\r\n`);
-    let color;
-    let rgb;
-    for (let i = 0; i < colors.length; i++) {
-      if (!colors.length) continue;
-      rgb = [];
-      color = colors[i].split(` `);
-      for (let j = 0; j < color.length; j++) {
-        if (isNaN(Number.parseInt(color[j]))) continue;
-        rgb.push(color[j]);
-      }
-      this._palette.push(`rgb(${rgb.slice(0, 3).join(`,`)})`);
-    }
+    // Parses a Fractint .map file
+    this._palette = Array.from(event.target.responseText.split(`\r\n`), this._parseColor);
   },
 
   set paletteName(name) {
