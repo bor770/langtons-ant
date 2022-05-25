@@ -1,20 +1,18 @@
 "use strict";
 
 const controller = {
-  _atATime: 0,
-
-  set stepsAtATime(steps) {
-    this._atATime = +steps || 1;
-  },
+  atATime: 0,
 
   step() {
-    for (let i = 0; i < this._atATime; i++) {
+    for (let i = 0; i < this.atATime; i++) {
       model.step();
     }
+    return this;
   },
 
   init() {
     model.initGrid();
     setInterval(this.step.bind(this), 0);
+    return this;
   },
 };

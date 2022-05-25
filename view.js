@@ -11,21 +11,24 @@ const view = {
     request.open(`GET`, url);
     request.onload = this._parsePalette.bind(this);
     request.send(null);
+    return this;
   },
 
   _parseColor(color) {
     // Parses a Fractint .map file
-    let rgb = color.split(` `).filter(x => !isNaN(Number.parseInt(x)));
-    return `rgb(${rgb.slice(0, 3).join(`,`)})`;
+    const rgb = color.split(` `).filter(x => !isNaN(Number.parseInt(x)));
+    return `rgb(${rgb.slice(0, 3).join()})`;
   },
 
   _parsePalette(event) {
     // Parses a Fractint .map file
     this._palette = Array.from(event.target.responseText.split(`\r\n`), this._parseColor);
+    return this;
   },
 
   set paletteName(name) {
     this._getPalette(name || `default.map`);
+    return this;
   },
 
   setup(width, height) {
@@ -36,10 +39,14 @@ const view = {
     this._canvas.setAttribute(`height`, height);
 
     this._context.fillRect(0, 0, width, height);
+
+    return this;
   },
 
   draw(gridValue, x, y) {
     this._context.fillStyle = this._palette[gridValue % this._palette.length];
     this._context.fillRect(x, y, 1, 1);
+
+    return this;
   },
 };

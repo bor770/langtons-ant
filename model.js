@@ -22,6 +22,7 @@ const model = {
     if (this._dir > this._ANTLEFT) {
       this._dir = this._ANTUP;
     }
+    return this;
   },
 
   _turnRight() {
@@ -29,6 +30,7 @@ const model = {
     if (this._dir < this._ANTUP) {
       this._dir = this._ANTLEFT;
     }
+    return this;
   },
 
   _moveForward() {
@@ -54,6 +56,7 @@ const model = {
     if (this._y < 0) {
       this._y = this.height - 1;
     }
+    return this;
   },
 
   initGrid() {
@@ -62,6 +65,7 @@ const model = {
     this._y = Math.floor(this.height / 2);
     this._dir = this._ANTUP;
     view.setup(this.width, this.height);
+    return this;
   },
 
   step() {
@@ -74,5 +78,6 @@ const model = {
     this._grid[this._x][this._y]++;
     this._moveForward();
     view.draw(this._grid[this._x][this._y], this._x, this._y);
+    return this;
   },
 };

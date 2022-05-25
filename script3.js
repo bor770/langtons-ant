@@ -21,7 +21,7 @@ window.onload = function () {
     view.paletteName = palette.value.substring(12); 
 
     // Speed 
-    controller.stepsAtATime = speed.value;
+    controller.atATime = +speed.value || 1;
 
     // Hide Form
     section.setAttribute(`class`, `d-none`);
