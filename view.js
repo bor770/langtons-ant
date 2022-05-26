@@ -1,42 +1,34 @@
 "use strict";
 
 const view = {
-  _canvas: {},
   _context: {},
   _palette: [],
 
-  _getPalette(fileName) {
-    const url = `maps/${fileName}`;
-    const request = new XMLHttpRequest();
-    request.open(`GET`, url);
-    request.onload = this._parsePalette.bind(this);
-    request.send(null);
-    return this;
-  },
-
   _parseColor(color) {
-    // Parses a Fractint .map file
+    // Parses a Fractint .map file row
     const rgb = color.split(` `).filter(x => !isNaN(Number.parseInt(x)));
     return `rgb(${rgb.slice(0, 3).join()})`;
   },
 
-  _parsePalette(event) {
+  parsePalette(mapFile) {
     // Parses a Fractint .map file
-    this._palette = Array.from(event.target.responseText.split(`\r\n`), this._parseColor);
-    return this;
-  },
+    this._palette = Array.from(mapFile.split(`\r\n`), this._parseColor);
 
-  set paletteName(name) {
-    this._getPalette(name || `default.map`);
     return this;
   },
 
   setup(width, height) {
-    this._canvas = document.getElementById(`canvas`);
-    this._context = this._canvas.getContext(`2d`);
+    const section = document.querySelector(`section`);
+    const canvas = document.querySelector(`canvas`);
 
-    this._canvas.setAttribute(`width`, width);
-    this._canvas.setAttribute(`height`, height);
+    // Hide form, show canvas
+    section.classList.add(`d-none`);
+    canvas.classList.remove(`d-none`);
+
+    this._context = canvas.getContext(`2d`);
+
+    canvas.width = width;
+    canvas.height = height;
 
     this._context.fillRect(0, 0, width, height);
 
