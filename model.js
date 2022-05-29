@@ -1,71 +1,74 @@
 "use strict";
 
+class Ant {
+  constructor(parameters) {
+    this.dir = parameters.dir;
+    this.rule = parameters.rule;
+    this.x = parameters.x;
+    this.y = parameters.y;
+  }
+
+  modulo(a, n) {
+    return ((a % n) + n) % n;
+  }
+
+  turnLeft() {
+    this.dir = this.modulo(this.dir - 1, 4);
+    return this;
+  }
+
+  turnRight() {
+    this.dir = this.modulo(this.dir + 1, 4);
+    return this;
+  }
+
+  moveForward() {
+    switch (this.dir) {
+      case model.ANTUP:
+        this.y = this.modulo(this.y - 1, model.height);
+        break;
+      case model.ANTRIGHT:
+        this.x = this.modulo(this.x + 1, model.width);
+        break;
+      case model.ANTDOWN:
+        this.y = this.modulo(this.y + 1, model.height);
+        break;
+      case model.ANTLEFT:
+        this.x = this.modulo(this.x - 1, model.width);
+        break;
+    }
+    return this;
+  }
+}
+
 const model = {
   ANTUP: 0,
   ANTRIGHT: 1,
   ANTDOWN: 2,
   ANTLEFT: 3,
-  dir: 0,
+  ant: {},
   grid: [],
   interval: null,
   max: 1,
   points: 0,
-  rule: [],
   speed: 1,
-  width: 0,
-  height: 0,
-  x: 0,
-  y: 0,
-
-  modulo(a, n) {
-    return ((a % n) + n) % n;
-  },
-
-  turnLeft() {
-    this.dir = this.modulo(this.dir - 1, 4);
-
-    return this;
-  },
-
-  turnRight() {
-    this.dir = this.modulo(this.dir + 1, 4);
-
-    return this;
-  },
-
-  moveForward() {
-    switch (this.dir) {
-      case this.ANTUP:
-        this.y = this.modulo(this.y - 1, this.height);
-        break;
-      case this.ANTRIGHT:
-        this.x = this.modulo(this.x + 1, this.width);
-        break;
-      case this.ANTDOWN:
-        this.y = this.modulo(this.y + 1, this.height);
-        break;
-      case this.ANTLEFT:
-        this.x = this.modulo(this.x - 1, this.width);
-        break;
-    }
-
-    return this;
-  },
+  width: innerWidth,
+  height: innerWidth,
 
   step() {
     this.points++;
     // Check maxPts
     if (this.points <= this.max) {
       // Make a step
-      if (this.rule[this.grid[this.x][this.y] % this.rule.length] === `1`) {
-        this.turnRight();
+      if (this.ant.rule[this.grid[this.ant.x][this.ant.y] % this.ant.rule.length] === `1`) {
+        this.ant.turnRight();
       } else {
-        this.turnLeft();
+        this.ant.turnLeft();
       }
-      this.grid[this.x][this.y]++;
-      this.moveForward();
+      this.grid[this.ant.x][this.ant.y]++;
+      this.ant.moveForward();
       // Draw it
-      view.draw(this.grid[this.x][this.y], this.x, this.y);
+      view.draw(this.grid[this.ant.x][this.ant.y], this.ant.x, this.ant.y);
     } else { // maxPts exceeded
       clearInterval(this.interval);
     }
@@ -81,16 +84,21 @@ const model = {
   },
 
   setup(parameters) {
-    this.rule = parameters.rule;
+    const antParameters = {
+      dir: this.ANTUP,
+      rule: parameters.rule,
+      x: Math.floor(parameters.width / 2),
+      y: Math.floor(parameters.height / 2)
+    }
+
     this.max = parameters.max;
     this.width = parameters.width;
     this.height = parameters.height;
     this.grid =
       Array.from(new Array(parameters.width), () => Array.from(new Array(parameters.height), () => 0));
-    this.x = Math.floor(parameters.width / 2);
-    this.y = Math.floor(parameters.height / 2);
     this.speed = parameters.speed;
-    this.dir = this.ANTUP;
+
+    this.ant = new Ant(antParameters);
 
     view.setup(parameters.width, parameters.height);
 
