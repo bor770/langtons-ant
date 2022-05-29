@@ -11,22 +11,19 @@ async function go(e) {
   const size = document.querySelector(`#formSize`);
   const palette = document.querySelector(`#formPalette`);
   const speed = document.querySelector(`#formSpeed`);
-  let parameters = {};
 
-  // Rule, Max, Size, Speed
-  parameters.rule = rule.value.split(``);
-  parameters.max = Number(max.value);
-  if (size.value.includes(`x`)) { // Width, Height
-    parameters.width = Number(size.value.split(`x`)[0]);
-    parameters.height = Number(size.value.split(`x`)[1]);
-  } else {
-    parameters.width = innerWidth;
-    parameters.height = innerHeight;
-  }
-  parameters.speed = Number(speed.value);
+  // rule, max, width, height, speed
+  const parameters = {
+    rule: rule.value.split(``),
+    max: Number(max.value),
+    width: size.value.includes(`x`) ? Number(size.value.split(`x`)[0]) : innerWidth,
+    height: size.value.includes(`x`) ? Number(size.value.split(`x`)[1]) : innerHeight,
+    speed: Number(speed.value)
+  };
+
   model.setup(parameters);
 
-  // Palette
+  // palette
   if (palette.value) {
     view.parsePalette(await readFile(palette.files[0]));
   } else { // default.map

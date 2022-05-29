@@ -1,98 +1,96 @@
 "use strict";
 
 const model = {
-  _ANTUP: 0,
-  _ANTRIGHT: 1,
-  _ANTDOWN: 2,
-  _ANTLEFT: 3,
-  _dir: 0,
-  _grid: [],
-  _interval: null,
-  _max: 1,
-  _points: 0,
-  _rule: [],
-  _speed: 1,
-  _width: 0,
-  _height: 0,
-  _x: 0,
-  _y: 0,
+  ANTUP: 0,
+  ANTRIGHT: 1,
+  ANTDOWN: 2,
+  ANTLEFT: 3,
+  dir: 0,
+  grid: [],
+  interval: null,
+  max: 1,
+  points: 0,
+  rule: [],
+  speed: 1,
+  width: 0,
+  height: 0,
+  x: 0,
+  y: 0,
 
-  _modulo(a, n) {
+  modulo(a, n) {
     return ((a % n) + n) % n;
   },
 
-  _turnLeft() {
-    this._dir = this._modulo(this._dir - 1, 4);
+  turnLeft() {
+    this.dir = this.modulo(this.dir - 1, 4);
 
     return this;
   },
 
-  _turnRight() {
-    this._dir = this._modulo(this._dir + 1, 4);
+  turnRight() {
+    this.dir = this.modulo(this.dir + 1, 4);
 
     return this;
   },
 
-  _moveForward() {
-    switch (this._dir) {
-      case this._ANTUP:
-        this._y = this._modulo(this._y - 1, this._height);
+  moveForward() {
+    switch (this.dir) {
+      case this.ANTUP:
+        this.y = this.modulo(this.y - 1, this.height);
         break;
-      case this._ANTRIGHT:
-        this._x = this._modulo(this._x + 1, this._width);
+      case this.ANTRIGHT:
+        this.x = this.modulo(this.x + 1, this.width);
         break;
-      case this._ANTDOWN:
-        this._y = this._modulo(this._y + 1, this._height);
+      case this.ANTDOWN:
+        this.y = this.modulo(this.y + 1, this.height);
         break;
-      case this._ANTLEFT:
-        this._x = this._modulo(this._x - 1, this._width);
+      case this.ANTLEFT:
+        this.x = this.modulo(this.x - 1, this.width);
         break;
     }
 
     return this;
   },
 
-  _step() {
-    // Make a step
-    if (this._rule[this._grid[this._x][this._y] % this._rule.length] === `1`) {
-      this._turnRight();
-    } else {
-      this._turnLeft();
-    }
-    this._grid[this._x][this._y]++;
-    this._moveForward();
-
-    // Draw it
-    view.draw(this._grid[this._x][this._y], this._x, this._y);
-
+  step() {
+    this.points++;
     // Check maxPts
-    this._points++;
-    if (this._points === this._max) {
-      clearInterval(this._interval);
+    if (this.points <= this.max) {
+      // Make a step
+      if (this.rule[this.grid[this.x][this.y] % this.rule.length] === `1`) {
+        this.turnRight();
+      } else {
+        this.turnLeft();
+      }
+      this.grid[this.x][this.y]++;
+      this.moveForward();
+      // Draw it
+      view.draw(this.grid[this.x][this.y], this.x, this.y);
+    } else { // maxPts exceeded
+      clearInterval(this.interval);
     }
-
     return this;
   },
 
-  _speedStep() {
-    for (let i = 0; i < this._speed; i++) {
-      this._step();
+  speedStep() {
+    for (let i = 0; i < this.speed; i++) {
+      this.step();
     }
 
     return this;
   },
 
   setup(parameters) {
-    this._rule = parameters.rule;
-    this._max = parameters.max;
-    this._width = parameters.width;
-    this._height = parameters.height;
-    this._grid =
+    this.rule = parameters.rule;
+    this.max = parameters.max;
+    this.width = parameters.width;
+    this.height = parameters.height;
+    this.grid =
       Array.from(new Array(parameters.width), () => Array.from(new Array(parameters.height), () => 0));
-    this._x = Math.floor(parameters.width / 2);
-    this._y = Math.floor(parameters.height / 2);
-    this._speed = parameters.speed;
-    this._dir = this._ANTUP;
+    this.x = Math.floor(parameters.width / 2);
+    this.y = Math.floor(parameters.height / 2);
+    this.speed = parameters.speed;
+    this.dir = this.ANTUP;
 
     view.setup(parameters.width, parameters.height);
 
@@ -100,6 +98,6 @@ const model = {
   },
 
   go() {
-    this._interval = setInterval(this._speedStep.bind(this), 0);
+    this.interval = setInterval(this.speedStep.bind(this), 0);
   }
 };
