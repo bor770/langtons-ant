@@ -4,9 +4,10 @@
 }
 
 * {
-  margin: 0;
   box-sizing: inherit;
   font: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -44,16 +45,36 @@ section h2 {
   text-align: center;
 }
 
-section p {
+section p,
+section form>div {
   display: contents;
 }
 
-section p * {
+section p *,
+section form>div * {
   height: 1.2rem;
 }
 
 section label {
   color: var(--gray);
+}
+
+section ul {
+  background-color: white;
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+}
+
+section li {
+  display: flex;
+  gap: .5rem;
+}
+
+section li label {
+  align-items: center;
+  color: black;
+  display: flex;
 }
 
 section .palette-input {

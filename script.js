@@ -8,14 +8,18 @@ function init() {
 async function go(e) {
   const rule = document.querySelector(`#formRule`);
   const max = document.querySelector(`#formMax`);
+  const num = document.querySelector(`#formNum`);
+  const type = document.querySelector(`#formType :checked`);
   const size = document.querySelector(`#formSize`);
   const palette = document.querySelector(`#formPalette`);
   const speed = document.querySelector(`#formSpeed`);
 
-  // rule, max, width, height, speed
+  // rule, max, num, width, height, speed
   const parameters = {
     rule: rule.value.split(``),
-    max: Number(max.value),
+    maxPts: Number(max.value),
+    numAnts: Number(num.value),
+    antType: Number(type.value),
     width: size.value.includes(`x`) ? Number(size.value.split(`x`)[0]) : innerWidth,
     height: size.value.includes(`x`) ? Number(size.value.split(`x`)[1]) : innerHeight,
     speed: Number(speed.value)

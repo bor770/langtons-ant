@@ -18,8 +18,18 @@
     <form>
       <h2>Parameters</h2>
       <p><label for="formRule">Rule String</label><input id="formRule" value="10"></p>
-      <p><label for="formRule">Maximum Points</label><input id="formMax" type="number"
+      <p><label for="formMax">Maxpts</label><input id="formMax" type="number" min="1"
           value="999999999"></p>
+      <p><label for="formNum">Numants</label><input id="formNum" type="number" min="1" value="1">
+      </p>
+      <div id="formType"><label>Ant Type</label>
+        <ul>
+          <li><input id="formType1" type="radio" checked name="type" value="1"><label
+              for="formType1">1</label></li>
+          <li><input id="formType2" type="radio" name="type" value="2"><label
+              for="formType2">2</label></li>
+        </ul>
+      </div>
       <p><label for="formSize">Size</label><select id="formSize">
           <option value="320x200">320x200</option>
           <option value="640x350">640x350</option>
@@ -28,7 +38,7 @@
         </select></p>
       <p><label for="formPalette">Palette</label><input class="palette-input" id="formPalette"
           accept=".map" type="file"></p>
-      <p><label for="formSpeed">Speed</label><input type="number" id="formSpeed" min="1"
+      <p><label for="formSpeed">Speed</label><input id="formSpeed" type="number" min="1"
           value="10000"></p>
       <p><button id="formGo" type="button">GO!</button></p>
     </form>
