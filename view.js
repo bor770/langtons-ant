@@ -6,8 +6,12 @@ const view = {
 
   parseColor(color) {
     // Parses a Fractint .map file row
-    const rgb = color.split(` `).filter(x => !isNaN(Number.parseInt(x)));
-    return `rgb(${rgb.slice(0, 3).join()})`;
+    const rgb = color.split(` `).filter(x => !isNaN(parseInt(x)));
+    if (rgb.length === 3) {
+      return `rgb(${rgb.join()})`;
+    } else {
+      return `rgb(0,0,0)`;
+    }
   },
 
   parsePalette(mapFile) {
