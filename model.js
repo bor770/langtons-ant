@@ -38,6 +38,12 @@ class Ant {
         this.x = this.modulo(this.x - 1, model.width);
         break;
     }
+
+    // Check border reach
+    if (!model.wrap && (this.x === 0 || this.y === 0)) {
+      model.border = true;
+    }
+    
     return this;
   }
 
@@ -64,16 +70,17 @@ const model = {
   ANTDOWN: 2,
   ANTLEFT: 3,
   ants: [],
+  border: false,
   points: 0,
 
   speedStep() {
     // step() speed times, but stop at this.maxPts total
     let i = 0;
-    while (i < this.speed && this.points <= this.maxPts) {
+    while (i < this.speed && this.points <= this.maxPts && !this.border) {
       this.ants.forEach(ant => ant.step());
       i++;
     }
-    if (this.points >= this.maxPts) {
+    if (this.points >= this.maxPts || this.border) {
       clearInterval(this.interval);
     }
     return this;
@@ -90,6 +97,7 @@ const model = {
 
     this.maxPts = parameters.maxPts;
     this.numAnts = parameters.numAnts;
+    this.wrap = parameters.wrap;
     this.width = parameters.width;
     this.height = parameters.height;
     this.grid =
