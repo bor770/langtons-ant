@@ -17,16 +17,16 @@ async function go(e) {
 
   // rule, max, num, width, height, speed
   const parameters = {
-    rule: [...rule.value],
+    rule: rule.value ? [...rule.value] : [...String((1e20 * Math.random()))],
     maxPts: +max.value,
-    numAnts: +num.value,
+    numAnts: num.value ? +num.value : Math.floor(256 * Math.random()) + 1,
     //antType: Number(type.value),
     wrap: wrap.checked,
     width: size.value.includes(`x`) ? +size.value.split(`x`)[0] : innerWidth,
     height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight,
     speed: +speed.value
   };
-  
+
   model.setup(parameters);
 
   // palette
