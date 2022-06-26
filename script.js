@@ -9,7 +9,6 @@ async function go(e) {
   const rule = document.querySelector(`#formRule`);
   const max = document.querySelector(`#formMax`);
   const num = document.querySelector(`#formNum`);
-  //const type = document.querySelector(`#formType :checked`);
   const wrap = document.querySelector(`#formWrap`);
   const size = document.querySelector(`#formSize`);
   const palette = document.querySelector(`#formPalette`);
@@ -20,7 +19,6 @@ async function go(e) {
     rule: rule.value ? [...rule.value] : [...String((1e20 * Math.random()))],
     maxPts: +max.value,
     numAnts: num.value ? +num.value : Math.floor(256 * Math.random()) + 1,
-    //antType: Number(type.value),
     wrap: wrap.checked,
     width: size.value.includes(`x`) ? +size.value.split(`x`)[0] : innerWidth,
     height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight,
