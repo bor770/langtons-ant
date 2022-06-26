@@ -22,12 +22,10 @@ const view = {
   },
 
   setup(width, height) {
-    const section = document.querySelector(`section`);
     const canvas = document.querySelector(`canvas`);
 
     // Hide form, show canvas
-    section.classList.add(`d-none`);
-    canvas.classList.remove(`d-none`);
+    canvas.classList.remove(`is-hidden`);
 
     this.context = canvas.getContext(`2d`);
 

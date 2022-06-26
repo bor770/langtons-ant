@@ -12,31 +12,54 @@
   <script src="script.js"></script>
 </head>
 
-<body>
-  <section>
-    <h1>Langton's Ant</h1>
-    <form>
-      <h2>Parameters</h2>
-      <p><label for="formRule">Rule String</label><input id="formRule" value="10"></p>
-      <p><label for="formMax">Maxpts</label><input id="formMax" type="number" min="1"
-          value="999999999"></p>
-      <p><label for="formNum">Numants</label><input id="formNum" type="number" min="1" value="1">
-      </p>
-      <p><label for="formWrap">Wrap?</label><input checked type="checkbox" id="formWrap"></p>
-      <p><label for="formSize">Size</label><select id="formSize">
-          <option value="320x200">320x200</option>
-          <option value="640x350">640x350</option>
-          <option value="640x480">640x480</option>
-          <option value="fullScreen">Full Screen</option>
-        </select></p>
-      <p><label for="formPalette">Palette</label><input class="palette-input" id="formPalette"
-          accept=".map" type="file"></p>
-      <p><label for="formSpeed">Speed</label><input id="formSpeed" type="number" min="1"
-          value="1"></p>
-      <p><button id="formGo" type="button">GO!</button></p>
-    </form>
-  </section>
-  <canvas class="d-none"></canvas>
+<body class="body">
+  <h1 class="heading body__heading">Langton's Ant</h1>
+  <form class="parameters body__parameters">
+    <h2 class="parameters__heading">Parameters</h2>
+    <p class="parameters__p parameters__rule-string">
+      <label class="parameters__label parameters__rule-string-label" for="formRule">Rule
+        String</label>
+      <input class="parameters__input parameters__rule-string-input" id="formRule" value="10">
+    </p>
+    <p class="parameters__p parameters__max-points">
+      <label class="parameters__label parameters__max-points-label" for="formMax">Maxpts</label>
+      <input class="parameters__input parameters__max-points-input" id="formMax" type="number"
+        min="1" value="999999999">
+    </p>
+    <p class="parameters__p parameters__num-ants">
+      <label class="parameters__label parameters__num-ants-label" for="formNum">Numants</label>
+      <input class="parameters__input parameters__num-ants-input" id="formNum" type="number" min="1"
+        value="1">
+    </p>
+    <p class="parameters__p parameters__wrap">
+      <label class="parameters__label parameters__wrap-label" for="formWrap">Wrap?</label>
+      <input class="parameters__input parameters__wrap-input" checked type="checkbox" id="formWrap">
+    </p>
+    <p class="parameters__p parameters__screen-size">
+      <label class="parameters__label parameters__screen-size-label" for="formSize">Size</label>
+      <select class="parameters__input parameters__screen-size-select" id="formSize">
+        <option value="320x200">320x200</option>
+        <option value="640x350">640x350</option>
+        <option value="640x480">640x480</option>
+        <option value="fullScreen">Full Screen</option>
+      </select>
+    </p>
+    <p class="parameters__p parameters__palette">
+      <label class="parameters__label parameters__palette-label" for="formPalette">Palette</label>
+      <input class="parameters__input parameters__palette-input" id="formPalette" accept=".map"
+        type="file">
+    </p>
+    <p class="parameters__p parameters__speed">
+      <label class="parameters__label parameters__speed-label" for="formSpeed">Speed</label>
+      <input class="parameters__input parameters__speed-input" id="formSpeed" type="number" min="1"
+        value="1">
+    </p>
+    <p class="parameters__p parameters__go">
+      <button class="parameters__button parameters__go-button" id="formGo"
+        type="button">GO!</button>
+    </p>
+  </form>
+  <canvas class="canvas is-hidden"></canvas>
 </body>
 
 </html>

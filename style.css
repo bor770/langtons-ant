@@ -3,14 +3,7 @@
   src: url("Perfect DOS VGA 437.ttf")
 }
 
-* {
-  box-sizing: inherit;
-  font: inherit;
-  margin: 0;
-  padding: 0;
-}
-
-html {
+:root {
   --blue-background: #0000a8;
   --dark-gray-foreground: #545454;
   --gray: #a8a8a8;
@@ -18,83 +11,85 @@ html {
   --green-foreground: #54fc54;
   --white-foreground: #fcfcfc;
   --yellow-foreground: #fcfc54;
-  box-sizing: border-box;
+}
+
+html {
   font: 4vh "DOS", monospace;
 }
 
-body {
-  background: var(--gray);
+.body {
+  background-color: var(--gray);
+  margin: 0;
 }
 
-section h1 {
-  background: var(--blue-background);
-  color: white;
-  text-align: center;
+.body__heading {
+  margin: 0;
 }
 
-section form {
-  background: var(--blue-background);
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+.body__parameters {
   margin: 1rem 1rem 0;
 }
 
-section h2 {
-  color: var(--yellow-foreground);
-  grid-column: 1 / 3;
+/* || heading */
+
+.heading {
+  background-color: var(--blue-background);
+  color: white;
+  font: inherit;
   text-align: center;
 }
 
-section p,
-section form>div {
+/* || parameters */
+
+.parameters {
+  background-color: var(--blue-background);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.parameters__heading {
+  color: var(--yellow-foreground);
+  font: inherit;
+  grid-column: 1 / 3;
+  margin: 0;
+  text-align: center;
+}
+
+.parameters__p {
   display: contents;
 }
 
-section p *,
-section form>div * {
+.parameters__button,
+.parameters__input,
+.parameters__label {
+  font: inherit;
   height: 1.2rem;
 }
 
-section label {
+.parameters__label,
+.parameters__palette-input {
   color: var(--gray);
 }
 
-section ul {
-  background-color: white;
-  display: flex;
-  justify-content: space-evenly;
-  list-style-type: none;
-}
-
-section li {
-  display: flex;
-  gap: .5rem;
-}
-
-section li label {
-  align-items: center;
-  color: black;
-  display: flex;
-}
-
-section .palette-input {
-  color: var(--gray);
-}
-
-section button {
-  background: var(--gray);
+.parameters__button {
+  background-color: var(--gray);
   color: var(--blue-background);
   grid-column: 1 / 3;
   justify-self: center;
-  text-align: center;
   width: fit-content;
 }
 
-canvas {
+/* || canvas */
+
+.canvas {
   height: 100vh;
+  position: fixed;
+  top: 0;
   width: 100vw;
 }
 
-.d-none {
+/* is-hidden */
+
+.is-hidden {
   display: none;
 }
