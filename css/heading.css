@@ -1,0 +1,6 @@
+.heading {
+  background-color: var(--blue-background);
+  color: white;
+  font: inherit;
+  text-align: center;
+}

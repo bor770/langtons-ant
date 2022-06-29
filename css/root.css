@@ -1,0 +1,13 @@
+:root {
+  --blue-background: #0000a8;
+  --dark-gray-foreground: #545454;
+  --gray: #a8a8a8;
+  --green-background: #00a800;
+  --green-foreground: #54fc54;
+  --white-foreground: #fcfcfc;
+  --yellow-foreground: #fcfc54;
+}
+
+html {
+  font: 4vh "DOS", monospace;
+}

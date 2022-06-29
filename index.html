@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="model.js"></script>
-  <script src="view.js"></script>
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/script.js"></script>
 </head>
 
 <body class="body">
@@ -59,7 +60,15 @@
         type="button">GO!</button>
     </p>
   </form>
+
   <canvas class="canvas is-hidden"></canvas>
+
+  <section class="delay is-hidden" id="delay">
+    <p class="delay__p">
+      <label for="delayInput" class="delay__label">Delay</label>
+      <input type="number" class="delay__input" id="delayInput" min="0" step="10" value="0">
+    </p>
+  </section>
 </body>
 
 </html>

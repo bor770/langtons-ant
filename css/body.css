@@ -1,0 +1,13 @@
+.body {
+  background-color: var(--gray);
+  font: 4vh "DOS", monospace;
+  margin: 0;
+}
+
+.body__heading {
+  margin: 0;
+}
+
+.body__parameters {
+  margin: 1rem 1rem 0;
+}

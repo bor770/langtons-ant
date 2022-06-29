@@ -1,0 +1,18 @@
+.delay {
+  position: fixed;
+  top: 0;
+}
+
+.delay__p {
+  align-items: stretch;
+  display: flex;
+  gap: 1rem;
+}
+
+.delay__label {
+  color: white;
+}
+
+.delay__input {
+  font: inherit;
+}

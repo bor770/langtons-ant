@@ -1,0 +1,14 @@
+@import url(body.css);
+@import url(canvas.css);
+@import url(delay.css);
+@import url(heading.css);
+@import url(is-hidden.css);
+@import url(parameters.css);
+@import url(root.css);
+
+@font-face {
+  font-family: DOS;
+  src: url("Perfect DOS VGA 437.ttf")
+}
+
+
