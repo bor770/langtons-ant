@@ -27,10 +27,11 @@ async function go(e) {
     wrap: wrap.checked,
     width: size.value.includes(`x`) ? +size.value.split(`x`)[0] : innerWidth,
     height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight,
-    speed: +speed.value
   };
 
   model.setup(parameters);
+
+  controller.setup(+speed.value);
 
   // palette
   if (palette.value) {

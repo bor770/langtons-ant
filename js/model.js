@@ -95,7 +95,6 @@ const model = {
     this.height = parameters.height;
     this.grid =
       Array.from(new Array(parameters.width), () => Array.from(new Array(parameters.height), () => 0));
-    this.speed = parameters.speed;
 
     for (let i = 0; i < this.numAnts; i++) {
       this.ants.push(new Ant(antParameters));
