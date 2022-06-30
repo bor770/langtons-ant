@@ -54,7 +54,7 @@ async function go(e) {
 
 // Helper function 
 function readFile(file) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const fileReader = new FileReader();
     fileReader.addEventListener(`load`, e => {
       resolve(e.target.result);

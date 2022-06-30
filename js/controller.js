@@ -25,7 +25,7 @@ const controller = {
   },
 
   speedStep() {
-    // step() speed times, but stop at maxPts total
+    // step() speed times, but stop at maxPts total, and check border
     for (let i = 0; i < this.speed && model.points <= model.maxPts && !model.border; i++) {
       model.stepEach();
     }
