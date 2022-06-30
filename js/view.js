@@ -2,6 +2,7 @@
 
 const view = {
   context: {},
+  delaySection: {},
   palette: [],
 
   parseColor(color) {
@@ -24,7 +25,7 @@ const view = {
   setup(width, height) {
     const canvas = document.querySelector(`canvas`);
 
-    // Hide form, show canvas
+    // Show canvas
     canvas.classList.remove(`is-hidden`);
 
     this.context = canvas.getContext(`2d`);
@@ -33,6 +34,8 @@ const view = {
     canvas.height = height;
 
     this.context.fillRect(0, 0, width, height);
+
+    this.delaySection = document.querySelector(`#delay`);
 
     return this;
   },
@@ -47,6 +50,20 @@ const view = {
   drawWhite(x, y) {
     this.context.fillStyle = `white`;
     this.context.fillRect(x, y, 1, 1);
+
+    return this;
+  },
+
+  showDelay() {
+    const delayInput = document.querySelector(`#delayInput`);
+    this.delaySection.classList.remove(`is-hidden`);
+    delayInput.focus();
+
+    return this;
+  },
+
+  hideDelay() {
+    this.delaySection.classList.add(`is-hidden`);
 
     return this;
   }

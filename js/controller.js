@@ -2,24 +2,20 @@
 
 const controller = {
   delay: 0,
-  //interval: 0,
+  interval: 0,
 
   changeDelay(e) {
-    const delaySection = document.querySelector(`#delay`);
-    const delayInput = document.querySelector(`#delayInput`);
     if ((e.code === `ArrowLeft` || e.code === `ArrowRight`) && model.speed === 1) {
       clearInterval(this.interval);
-      delaySection.classList.remove(`is-hidden`);
-      delayInput.focus();
+      view.showDelay();
     }
   },
 
   updateDelay(e) {
-    const delaySection = document.querySelector(`#delay`);
     if (e.code === `Enter`) {
       this.delay = e.target.value;
-      delaySection.classList.add(`is-hidden`);
-      this.interval = setInterval(this.speedStep.bind(this), this.delay);
+      view.hideDelay();
+      this.go();
     }
   },
 

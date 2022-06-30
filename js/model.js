@@ -2,7 +2,6 @@
 
 class Ant {
   constructor(parameters) {
-    this.type = parameters.type;
     this.dir = parameters.dir;
     this.rule = parameters.rule;
     this.x = parameters.x;
@@ -15,11 +14,13 @@ class Ant {
 
   turnLeft() {
     this.dir = this.modulo(this.dir - 1, 4);
+
     return this;
   }
 
   turnRight() {
     this.dir = this.modulo(this.dir + 1, 4);
+
     return this;
   }
 
@@ -50,6 +51,7 @@ class Ant {
   step() {
     // Draw current
     view.draw(model.grid[this.x][this.y], this.x, this.y);
+
     // Make a step
     if (this.rule[model.grid[this.x][this.y] % this.rule.length] === `1`) {
       this.turnRight();
@@ -58,8 +60,10 @@ class Ant {
     }
     model.grid[this.x][this.y]++;
     this.moveForward();
+
     // Draw white
     view.drawWhite(this.x, this.y);
+
     // Keep track for maxPts
     model.points++;
 
