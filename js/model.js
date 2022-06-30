@@ -1,76 +1,5 @@
 "use strict";
 
-class Ant {
-  constructor(parameters) {
-    this.dir = parameters.dir;
-    this.rule = parameters.rule;
-    this.x = parameters.x;
-    this.y = parameters.y;
-  }
-
-  modulo(a, n) {
-    return ((a % n) + n) % n;
-  }
-
-  turnLeft() {
-    this.dir = this.modulo(this.dir - 1, 4);
-
-    return this;
-  }
-
-  turnRight() {
-    this.dir = this.modulo(this.dir + 1, 4);
-
-    return this;
-  }
-
-  moveForward() {
-    switch (this.dir) {
-      case model.ANTUP:
-        this.y = this.modulo(this.y - 1, model.height);
-        break;
-      case model.ANTRIGHT:
-        this.x = this.modulo(this.x + 1, model.width);
-        break;
-      case model.ANTDOWN:
-        this.y = this.modulo(this.y + 1, model.height);
-        break;
-      case model.ANTLEFT:
-        this.x = this.modulo(this.x - 1, model.width);
-        break;
-    }
-
-    // Check border reach
-    if (!model.wrap && (this.x === 0 || this.y === 0)) {
-      model.border = true;
-    }
-    
-    return this;
-  }
-
-  step() {
-    // Draw current
-    view.draw(model.grid[this.x][this.y], this.x, this.y);
-
-    // Make a step
-    if (this.rule[model.grid[this.x][this.y] % this.rule.length] === `1`) {
-      this.turnRight();
-    } else {
-      this.turnLeft();
-    }
-    model.grid[this.x][this.y]++;
-    this.moveForward();
-
-    // Draw white
-    view.drawWhite(this.x, this.y);
-
-    // Keep track for maxPts
-    model.points++;
-
-    return this;
-  }
-}
-
 const model = {
   ANTUP: 0,
   ANTRIGHT: 1,
@@ -81,8 +10,78 @@ const model = {
   points: 0,
 
   setup(parameters) {
+    class Ant {
+      constructor(parameters) {
+        this.dir = parameters.dir;
+        this.rule = parameters.rule;
+        this.x = parameters.x;
+        this.y = parameters.y;
+      }
+    
+      modulo(a, n) {
+        return ((a % n) + n) % n;
+      }
+    
+      turnLeft() {
+        this.dir = this.modulo(this.dir - 1, 4);
+    
+        return this;
+      }
+    
+      turnRight() {
+        this.dir = this.modulo(this.dir + 1, 4);
+    
+        return this;
+      }
+    
+      moveForward() {
+        switch (this.dir) {
+          case model.ANTUP:
+            this.y = this.modulo(this.y - 1, model.height);
+            break;
+          case model.ANTRIGHT:
+            this.x = this.modulo(this.x + 1, model.width);
+            break;
+          case model.ANTDOWN:
+            this.y = this.modulo(this.y + 1, model.height);
+            break;
+          case model.ANTLEFT:
+            this.x = this.modulo(this.x - 1, model.width);
+            break;
+        }
+    
+        // Check border reach
+        if (!model.wrap && (this.x === 0 || this.y === 0)) {
+          model.border = true;
+        }
+        
+        return this;
+      }
+    
+      step() {
+        // Draw current
+        view.draw(model.grid[this.x][this.y], this.x, this.y);
+    
+        // Make a step
+        if (this.rule[model.grid[this.x][this.y] % this.rule.length] === `1`) {
+          this.turnRight();
+        } else {
+          this.turnLeft();
+        }
+        model.grid[this.x][this.y]++;
+        this.moveForward();
+    
+        // Draw white
+        view.drawWhite(this.x, this.y);
+    
+        // Keep track for maxPts
+        model.points++;
+    
+        return this;
+      }
+    };
+    
     const antParameters = {
-      type: parameters.antType,
       dir: this.ANTUP,
       rule: parameters.rule,
       x: Math.floor(parameters.width / 2),
@@ -105,5 +104,9 @@ const model = {
     view.setup(parameters.width, parameters.height);
 
     return this;
+  },
+
+  stepEach() {
+    this.ants.forEach(ant => ant.step());
   }
 };

@@ -21,12 +21,11 @@ const controller = {
 
   speedStep() {
     // step() speed times, but stop at maxPts total
-    let i = 0;
-    while (i < model.speed && model.points <= model.maxPts && !model.border) {
-      model.ants.forEach(ant => ant.step());
-      i++;
+    for (let i = 0; i < model.speed && model.points <= model.maxPts && !model.border; i++) {
+      model.stepEach();
     }
-    if (model.points >= model.maxPts || model.border) {
+
+    if (model.points > model.maxPts || model.border) {
       clearInterval(this.interval);
     }
 
