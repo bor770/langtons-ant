@@ -26,7 +26,7 @@ async function go(e) {
     numAnts: num.value ? +num.value : Math.floor(256 * Math.random()) + 1,
     wrap: wrap.checked,
     width: size.value.includes(`x`) ? +size.value.split(`x`)[0] : innerWidth,
-    height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight,
+    height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight
   };
 
   model.setup(parameters);
@@ -44,6 +44,7 @@ async function go(e) {
   //delay
   document.addEventListener(`keydown`, controller.changeDelay.bind(controller));
   delayInput.addEventListener(`keydown`, controller.updateDelay.bind(controller));
+  delayInput.addEventListener(`keyup`, controller.updateDelay.bind(controller));
 
 
   // Go!

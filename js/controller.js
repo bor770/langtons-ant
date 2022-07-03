@@ -10,17 +10,30 @@ const controller = {
   },
 
   changeDelay(e) {
-    if ((e.code === `ArrowLeft` || e.code === `ArrowRight`) && model.speed === 1) {
+    if ((e.code === `ArrowLeft` || e.code === `ArrowRight`) && this.speed === 1) {
       clearInterval(this.interval);
       view.showDelay();
     }
   },
 
   updateDelay(e) {
-    if (e.code === `Enter`) {
-      this.delay = e.target.value;
-      view.hideDelay();
-      this.go();
+    console.log(e);
+    switch (e.code) {
+      case `ControlLeft`:
+        switch (e.type) {
+          case `keydown`:
+            e.target.step = `100`;
+            break;
+          case `keyup`: 
+            e.target.step = `10`;
+            break;
+        }
+        break;
+      case `Enter`:
+        this.delay = e.target.value;
+        view.hideDelay();
+        this.go();
+        break;
     }
   },
 
