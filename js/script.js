@@ -16,10 +16,7 @@ async function go(e) {
   const goButton = document.querySelector(`button`);
   const delayInput = document.querySelector(`#delayInput`);
 
-  // Disable "Go" button
-  goButton.disabled = true;
-
-  // rule, max, num, width, height, speed
+  // rule, max, num, wrap, width, height
   const parameters = {
     rule: rule.value ? [...rule.value] : [...String((1e20 * Math.random()))],
     maxPts: +max.value,
@@ -31,14 +28,14 @@ async function go(e) {
 
   model.setup(parameters);
 
+  // speed
   controller.setup(+speed.value);
 
   // palette
   if (palette.value) {
     view.parsePalette(await readFile(palette.files[0]));
   } else { // default.map
-    view.parsePalette(await fetch(`maps/default.map`)
-      .then(response => response.text()));
+    view.parsePalette(await fetch(`maps/default.map`).then(response => response.text()));
   }
 
   //delay
@@ -46,6 +43,8 @@ async function go(e) {
   delayInput.addEventListener(`keydown`, controller.updateDelay.bind(controller));
   delayInput.addEventListener(`keyup`, controller.updateDelay.bind(controller));
 
+  // Disable "Go" button
+  goButton.disabled = true;
 
   // Go!
   controller.go();
