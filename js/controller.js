@@ -17,7 +17,6 @@ const controller = {
   },
 
   updateDelay(e) {
-    console.log(e);
     switch (e.code) {
       case `ControlLeft`:
         switch (e.type) {

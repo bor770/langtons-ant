@@ -1,66 +1,65 @@
 "use strict";
 
-function init() {
-  const goButton = document.querySelector(`button`);
-  goButton.addEventListener(`click`, go);
-}
-
-async function go(e) {
-  const rule = document.querySelector(`#formRule`);
-  const max = document.querySelector(`#formMax`);
-  const num = document.querySelector(`#formNum`);
-  const wrap = document.querySelector(`#formWrap`);
-  const size = document.querySelector(`#formSize`);
-  const palette = document.querySelector(`#formPalette`);
-  const speed = document.querySelector(`#formSpeed`);
-  const goButton = document.querySelector(`button`);
+addEventListener(`load`, () => {
+  const formRule = document.querySelector(`#formRule`);
+  const formMax = document.querySelector(`#formMax`);
+  const formNum = document.querySelector(`#formNum`);
+  const formWrap = document.querySelector(`#formWrap`);
+  const formSize = document.querySelector(`#formSize`);
+  const formPalette = document.querySelector(`#formPalette`);
+  const formSpeed = document.querySelector(`#formSpeed`);
+  const formGo = document.querySelector(`#formGo`);
   const delayInput = document.querySelector(`#delayInput`);
 
-  // rule, max, num, wrap, width, height
-  const parameters = {
-    rule: rule.value ? [...rule.value] : [...String((1e20 * Math.random()))],
-    maxPts: +max.value,
-    numAnts: num.value ? +num.value : Math.floor(256 * Math.random()) + 1,
-    wrap: wrap.checked,
-    width: size.value.includes(`x`) ? +size.value.split(`x`)[0] : innerWidth,
-    height: size.value.includes(`x`) ? +size.value.split(`x`)[1] : innerHeight
-  };
+  function setModel() {
+    const modelParameters = {
+      rule: formRule.value ? [...formRule.value] : [...String((1e20 * Math.random()))],
+      maxPts: +formMax.value,
+      numAnts: formNum.value ? +formNum.value : Math.floor(256 * Math.random()) + 1,
+      wrap: formWrap.checked,
+      width: formSize.value.includes(`x`) ? +formSize.value.split(`x`)[0] : innerWidth,
+      height: formSize.value.includes(`x`) ? +formSize.value.split(`x`)[1] : innerHeight
+    };
 
-  model.setup(parameters);
-
-  // speed
-  controller.setup(+speed.value);
-
-  // palette
-  if (palette.value) {
-    view.parsePalette(await readFile(palette.files[0]));
-  } else { // default.map
-    view.parsePalette(await fetch(`maps/default.map`).then(response => response.text()));
+    model.setup(modelParameters);
   }
 
-  //delay
-  document.addEventListener(`keydown`, controller.changeDelay.bind(controller));
-  delayInput.addEventListener(`keydown`, controller.updateDelay.bind(controller));
-  delayInput.addEventListener(`keyup`, controller.updateDelay.bind(controller));
+  async function setView() {
+    function readFile(file) {
+      return new Promise(resolve => {
+        const fileReader = new FileReader();
 
-  // Disable "Go" button
-  goButton.disabled = true;
+        fileReader.addEventListener(`load`, e => {
+          resolve(e.target.result);
+        });
 
-  // Go!
-  controller.go();
+        fileReader.readAsText(file);
+      });
+    }
 
-  return false;
-}
+    if (formPalette.value) {
+      view.parsePalette(await readFile(formPalette.files[0]));
+    } else {
+      view.parsePalette(await fetch(`maps/default.map`).then(response => response.text()));
+    }
+  }
 
-// Helper function 
-function readFile(file) {
-  return new Promise(resolve => {
-    const fileReader = new FileReader();
-    fileReader.addEventListener(`load`, e => {
-      resolve(e.target.result);
-    });
-    fileReader.readAsText(file);
+  function setController() {
+    controller.setup(+formSpeed.value);
+
+    document.addEventListener(`keydown`, controller.changeDelay.bind(controller));
+    delayInput.addEventListener(`keydown`, controller.updateDelay.bind(controller));
+    delayInput.addEventListener(`keyup`, controller.updateDelay.bind(controller));
+  }
+
+  formGo.addEventListener(`click`, async e => {
+    e.target.disabled = true;
+
+    setModel();
+    setController();
+    await setView();
+
+    controller.go();
   });
-}
 
-addEventListener(`load`, init);
+});
