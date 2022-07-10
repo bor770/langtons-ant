@@ -7,7 +7,13 @@ const model = {
   ANTLEFT: 3,
   ants: [],
   border: false,
+  grid: [],
+  maxPts: 1,
+  numAnts: 1,
   points: 0,
+  width: 1,
+  height: 1,
+  wrap: true,
 
   setup(parameters) {
     class Ant {
@@ -15,7 +21,7 @@ const model = {
       rule;
       x;
       y;
-      
+
       constructor(parameters) {
         this.dir = parameters.dir;
         this.rule = parameters.rule;
