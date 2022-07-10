@@ -33,6 +33,7 @@ const view = {
     canvas.width = width;
     canvas.height = height;
 
+    // Fill Blank
     this.context.fillRect(0, 0, width, height);
 
     this.delaySection = document.querySelector(`#delay`);
