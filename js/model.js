@@ -11,6 +11,11 @@ const model = {
 
   setup(parameters) {
     class Ant {
+      dir;
+      rule;
+      x;
+      y;
+      
       constructor(parameters) {
         this.dir = parameters.dir;
         this.rule = parameters.rule;
