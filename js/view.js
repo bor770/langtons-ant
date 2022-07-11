@@ -1,6 +1,7 @@
 "use strict";
 
 const view = {
+  canvas: {},
   context: {},
   delaySection: {},
   palette: [],
@@ -23,15 +24,15 @@ const view = {
   },
 
   setup(width, height) {
-    const canvas = document.querySelector(`canvas`);
+    this.canvas = document.querySelector(`canvas`);
 
     // Show canvas
-    canvas.classList.remove(`is-hidden`);
+    this.canvas.classList.remove(`is-hidden`);
 
-    this.context = canvas.getContext(`2d`);
+    this.context = this.canvas.getContext(`2d`);
 
-    canvas.width = width;
-    canvas.height = height;
+    this.canvas.width = width;
+    this.canvas.height = height;
 
     // Fill Blank
     this.context.fillRect(0, 0, width, height);
@@ -65,5 +66,9 @@ const view = {
     this.delaySection.classList.add(`is-hidden`);
 
     return this;
+  },
+
+  colorCycle() {
+    
   }
 };

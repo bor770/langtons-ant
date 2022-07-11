@@ -47,7 +47,7 @@ addEventListener(`load`, () => {
   function setController() {
     controller.setup(+formSpeed.value);
 
-    document.addEventListener(`keydown`, controller.changeDelay.bind(controller));
+    document.addEventListener(`keydown`, controller.processKey.bind(controller));
     delayInput.addEventListener(`keydown`, controller.updateDelay.bind(controller));
     delayInput.addEventListener(`keyup`, controller.updateDelay.bind(controller));
   }

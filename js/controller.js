@@ -9,10 +9,19 @@ const controller = {
     this.speed = speed;
   },
 
-  changeDelay(e) {
-    if ((e.code === `ArrowLeft` || e.code === `ArrowRight`) && this.speed === 1) {
-      clearInterval(this.interval);
-      view.showDelay();
+  processKey(e) {
+    switch (e.code) {
+      case `ArrowLeft`:
+      case `ArrowRight`:
+        if (this.speed === 1) {
+          clearInterval(this.interval);
+          view.showDelay();
+        }
+        break;
+      case `NumpadAdd`:
+        clearInterval(this.interval);
+        view.colorCycle();
+        break;
     }
   },
 
