@@ -1,10 +1,10 @@
 "use strict";
 
 const model = {
-  ANTUP: 0,
-  ANTRIGHT: 1,
-  ANTDOWN: 2,
-  ANTLEFT: 3,
+  ANT_UP: 0,
+  ANT_RIGHT: 1,
+  ANT_DOWN: 2,
+  ANT_LEFT: 3,
   ants: [],
   border: false,
   grid: [],
@@ -44,19 +44,25 @@ const model = {
     
         return this;
       }
+
+      turnBack() {
+        this.dir = this.modulo(this.dir + 2, 4);
+
+        return this;
+      }
     
       moveForward() {
         switch (this.dir) {
-          case model.ANTUP:
+          case model.ANT_UP:
             this.y = this.modulo(this.y - 1, model.height);
             break;
-          case model.ANTRIGHT:
+          case model.ANT_RIGHT:
             this.x = this.modulo(this.x + 1, model.width);
             break;
-          case model.ANTDOWN:
+          case model.ANT_DOWN:
             this.y = this.modulo(this.y + 1, model.height);
             break;
-          case model.ANTLEFT:
+          case model.ANT_LEFT:
             this.x = this.modulo(this.x - 1, model.width);
             break;
         }
@@ -73,11 +79,13 @@ const model = {
         // Draw current
         view.draw(model.grid[this.x][this.y], this.x, this.y);
     
-        // Make a step
-        if (this.rule[model.grid[this.x][this.y] % this.rule.length] === `1`) {
-          this.turnRight();
-        } else {
-          this.turnLeft();
+        switch (this.rule[model.grid[this.x][this.y] % this.rule.length]) {
+          case '0':
+            this.turnLeft();
+            break;
+          default:
+            this.turnRight();
+            break;
         }
         model.grid[this.x][this.y]++;
         this.moveForward();
@@ -93,7 +101,7 @@ const model = {
     };
     
     const antParameters = {
-      dir: this.ANTUP,
+      dir: this.ANT_UP,
       rule: parameters.rule,
       x: Math.floor(parameters.width / 2),
       y: Math.floor(parameters.height / 2)
