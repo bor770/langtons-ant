@@ -42,14 +42,12 @@ const view = {
   },
 
   draw(gridValue, x, y) {
-    this.context.fillStyle = this.palette[gridValue % this.palette.length];
-    this.context.fillRect(x, y, 1, 1);
+    if (gridValue === `white`) {
+      this.context.fillStyle = `white`;
+    } else {
+      this.context.fillStyle = this.palette[gridValue % this.palette.length];
+    }
 
-    return this;
-  },
-
-  drawWhite(x, y) {
-    this.context.fillStyle = `white`;
     this.context.fillRect(x, y, 1, 1);
 
     return this;

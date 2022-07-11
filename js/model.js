@@ -83,7 +83,7 @@ const model = {
         this.moveForward();
     
         // Draw white
-        view.drawWhite(this.x, this.y);
+        view.draw(`white`, this.x, this.y);
     
         // Keep track for maxPts
         model.points++;
@@ -118,5 +118,7 @@ const model = {
 
   stepEach() {
     this.ants.forEach(ant => ant.step());
+
+    return this;
   }
 };
