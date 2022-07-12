@@ -5,6 +5,7 @@ const view = {
   context: {},
   delaySection: {},
   palette: [],
+  shift: 0,
 
   setup: {
     parsePalette(mapFile) {
@@ -14,9 +15,9 @@ const view = {
         // Parses a Fractint .map file row
         const rgb = color.split(` `).filter(x => !isNaN(parseInt(x)));
         if (rgb.length === 3) {
-          return `rgb(${rgb.join()})`;
+          return rgb;
         } else {
-          return `rgb(0,0,0)`;
+          return [0, 0, 0];
         }
       }
 
@@ -46,16 +47,44 @@ const view = {
   },
 
   draw: {
-    draw(gridValue, x, y) {
+    drawPixel(gridValue, x, y) {
       if (gridValue === `white`) {
         view.context.fillStyle = `white`;
       } else {
-        view.context.fillStyle = view.palette[gridValue % view.palette.length];
+        view.context.fillStyle = `rgb(${view.palette[gridValue % view.palette.length].join(`,`)})`;
       }
 
       view.context.fillRect(x, y, 1, 1);
 
       return this;
+    },
+
+    drawEntire() {
+      const width = view.canvas.width;
+      const height = view.canvas.height;
+      const img = new ImageData(width, height);
+
+      for (let j = 0; j < height; j++) {
+        for (let i = 0; i < width; i++) {
+          const index = 4 * (j * width + i);
+          let color;
+          if (!(model.grid[i][j] % view.palette.length)) {
+            color = view.palette[0];
+          } else {
+            color = view.palette[(model.grid[i][j] + view.shift) % view.palette.length];
+          }
+          img.data[index] = color[0];
+          img.data[index + 1] = color[1];
+          img.data[index + 2] = color[2];
+          img.data[index + 3] = 255;
+        }
+      }
+
+      view.context.putImageData(img, 0, 0);
+
+      view.shift++;
+
+      requestAnimationFrame(view.draw.drawEntire);
     }
   },
 
@@ -76,7 +105,9 @@ const view = {
     }
   },
 
-  colorCycle() {
-
+  cycle: {
+    colorCycle() {
+      view.draw.drawEntire();
+    }
   }
 };

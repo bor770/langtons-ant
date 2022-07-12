@@ -77,7 +77,7 @@ const model = {
     
       step() {
         // Draw current
-        view.draw.draw(model.grid[this.x][this.y], this.x, this.y);
+        view.draw.drawPixel(model.grid[this.x][this.y], this.x, this.y);
     
         switch (this.rule[model.grid[this.x][this.y] % this.rule.length]) {
           case '0':
@@ -91,7 +91,7 @@ const model = {
         this.moveForward();
     
         // Draw white
-        view.draw.draw(`white`, this.x, this.y);
+        view.draw.drawPixel(`white`, this.x, this.y);
     
         // Keep track for maxPts
         model.points++;

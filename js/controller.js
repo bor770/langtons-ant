@@ -20,7 +20,7 @@ const controller = {
         break;
       case `NumpadAdd`:
         clearInterval(this.interval);
-        view.colorCycle();
+        view.cycle.colorCycle();
         break;
     }
   },
