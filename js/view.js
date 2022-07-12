@@ -6,69 +6,77 @@ const view = {
   delaySection: {},
   palette: [],
 
-  parseColor(color) {
-    // Parses a Fractint .map file row
-    const rgb = color.split(` `).filter(x => !isNaN(parseInt(x)));
-    if (rgb.length === 3) {
-      return `rgb(${rgb.join()})`;
-    } else {
-      return `rgb(0,0,0)`;
+  setup: {
+    parsePalette(mapFile) {
+      // Parses a Fractint .map file
+
+      function parseColor(color) {
+        // Parses a Fractint .map file row
+        const rgb = color.split(` `).filter(x => !isNaN(parseInt(x)));
+        if (rgb.length === 3) {
+          return `rgb(${rgb.join()})`;
+        } else {
+          return `rgb(0,0,0)`;
+        }
+      }
+
+      view.palette = Array.from(mapFile.split(`\r\n`), parseColor);
+
+      return this;
+    },
+
+    setup(width, height) {
+      view.canvas = document.querySelector(`canvas`);
+
+      // Show canvas
+      view.canvas.classList.remove(`is-hidden`);
+
+      view.context = view.canvas.getContext(`2d`);
+
+      view.canvas.width = width;
+      view.canvas.height = height;
+
+      // Fill Blank
+      view.context.fillRect(0, 0, width, height);
+
+      view.delaySection = document.querySelector(`#delay`);
+
+      return this;
     }
   },
 
-  parsePalette(mapFile) {
-    // Parses a Fractint .map file
-    this.palette = Array.from(mapFile.split(`\r\n`), this.parseColor);
+  draw: {
+    draw(gridValue, x, y) {
+      if (gridValue === `white`) {
+        view.context.fillStyle = `white`;
+      } else {
+        view.context.fillStyle = view.palette[gridValue % view.palette.length];
+      }
 
-    return this;
-  },
+      view.context.fillRect(x, y, 1, 1);
 
-  setup(width, height) {
-    this.canvas = document.querySelector(`canvas`);
-
-    // Show canvas
-    this.canvas.classList.remove(`is-hidden`);
-
-    this.context = this.canvas.getContext(`2d`);
-
-    this.canvas.width = width;
-    this.canvas.height = height;
-
-    // Fill Blank
-    this.context.fillRect(0, 0, width, height);
-
-    this.delaySection = document.querySelector(`#delay`);
-
-    return this;
-  },
-
-  draw(gridValue, x, y) {
-    if (gridValue === `white`) {
-      this.context.fillStyle = `white`;
-    } else {
-      this.context.fillStyle = this.palette[gridValue % this.palette.length];
+      return this;
     }
-
-    this.context.fillRect(x, y, 1, 1);
-
-    return this;
   },
 
-  showDelay() {
-    const delayInput = document.querySelector(`#delayInput`);
-    this.delaySection.classList.remove(`is-hidden`);
-    delayInput.focus();
+  delay: {
+    showDelay() {
+      const delayInput = document.querySelector(`#delayInput`);
 
-    return this;
-  },
+      view.delaySection.classList.remove(`is-hidden`);
+      delayInput.focus();
 
-  hideDelay() {
-    this.delaySection.classList.add(`is-hidden`);
+      return this;
+    },
 
-    return this;
+    hideDelay() {
+      view.delaySection.classList.add(`is-hidden`);
+
+      return this;
+    }
   },
 
   colorCycle() {
-    
+
   }
 };

@@ -77,7 +77,7 @@ const model = {
     
       step() {
         // Draw current
-        view.draw(model.grid[this.x][this.y], this.x, this.y);
+        view.draw.draw(model.grid[this.x][this.y], this.x, this.y);
     
         switch (this.rule[model.grid[this.x][this.y] % this.rule.length]) {
           case '0':
@@ -91,7 +91,7 @@ const model = {
         this.moveForward();
     
         // Draw white
-        view.draw(`white`, this.x, this.y);
+        view.draw.draw(`white`, this.x, this.y);
     
         // Keep track for maxPts
         model.points++;
@@ -119,7 +119,7 @@ const model = {
       this.ants.push(new Ant(antParameters));
     }
 
-    view.setup(parameters.width, parameters.height);
+    view.setup.setup(parameters.width, parameters.height);
 
     return this;
   },

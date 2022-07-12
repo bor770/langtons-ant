@@ -38,9 +38,9 @@ addEventListener(`load`, () => {
     }
 
     if (formPalette.value) {
-      view.parsePalette(await readFile(formPalette.files[0]));
+      view.setup.parsePalette(await readFile(formPalette.files[0]));
     } else {
-      view.parsePalette(await fetch(`maps/default.map`).then(response => response.text()));
+      view.setup.parsePalette(await fetch(`maps/default.map`).then(response => response.text()));
     }
   }
 
