@@ -6,20 +6,22 @@ const controller = {
   speed: 1,
 
   setup(speed) {
-    this.speed = speed;
+    controller.speed = speed;
+
+    return this;
   },
 
   processKey(e) {
     switch (e.code) {
       case `ArrowLeft`:
       case `ArrowRight`:
-        if (this.speed === 1) {
-          clearInterval(this.interval);
+        if (controller.speed === 1) {
+          clearInterval(controller.interval);
           view.delay.show();
         }
         break;
       case `NumpadAdd`:
-        clearInterval(this.interval);
+        clearInterval(controller.interval);
         view.cycle.colorCycle();
         break;
     }
@@ -38,29 +40,29 @@ const controller = {
         }
         break;
       case `Enter`:
-        this.delay = e.target.value;
+        controller.delay = e.target.value;
         view.delay.hide();
-        this.go();
+        controller.go();
         break;
     }
   },
 
   speedStep() {
     // step() speed times, but stop at maxPts total, and check border
-    for (let i = 0; i < this.speed && model.points <= model.maxPts && !(model.border && !model.wrap);
-      i++) {
+    for
+      (let i = 0; i < controller.speed && model.points <= model.maxPts && !(model.border && !model.wrap); i++) {
       model.stepEach();
     }
 
     if (model.points > model.maxPts || (model.border && !model.wrap)) {
-      clearInterval(this.interval);
+      clearInterval(controller.interval);
     }
 
     return this;
   },
 
   go() {
-    this.interval = setInterval(this.speedStep.bind(this), this.delay);
+    controller.interval = setInterval(controller.speedStep, controller.delay);
 
     return this;
   }
