@@ -3,17 +3,18 @@
 const view = {
   canvas: {},
   context: {},
+  delayInput: {},
   delaySection: {},
   palette: [],
-  shift: 0,
+  width: 1,
+  height: 1,
 
   setup: {
     parsePalette(mapFile) {
       // Parses a Fractint .map file
-
-      function parseColor(color) {
+      function parseColor(row) {
         // Parses a Fractint .map file row
-        const rgb = color.split(` `).filter(x => !isNaN(parseInt(x)));
+        const rgb = row.split(` `).filter(x => !isNaN(parseInt(x)));
         if (rgb.length === 3) {
           return rgb;
         } else {
@@ -22,24 +23,24 @@ const view = {
       }
 
       view.palette = Array.from(mapFile.split(`\r\n`), parseColor);
-
+      
       return this;
     },
 
     setup(width, height) {
       view.canvas = document.querySelector(`canvas`);
 
-      // Show canvas
       view.canvas.classList.remove(`is-hidden`);
-
-      view.context = view.canvas.getContext(`2d`);
 
       view.canvas.width = width;
       view.canvas.height = height;
+      
+      view.context = view.canvas.getContext(`2d`);
 
       // Fill Blank
       view.context.fillRect(0, 0, width, height);
 
+      view.delayInput = document.querySelector(`#delayInput`);
       view.delaySection = document.querySelector(`#delay`);
 
       return this;
@@ -57,9 +58,28 @@ const view = {
       view.context.fillRect(x, y, 1, 1);
 
       return this;
+    }
+  },
+
+  delay: {
+    show() {
+      view.delaySection.classList.remove(`is-hidden`);
+      view.delayInput.focus();
+
+      return this;
     },
 
-    drawEntire() {
+    hide() {
+      view.delaySection.classList.add(`is-hidden`);
+
+      return this;
+    }
+  },
+
+  cycle: {
+    shift: 0,
+
+    colorCycle() {
       const width = view.canvas.width;
       const height = view.canvas.height;
       const img = new ImageData(width, height);
@@ -71,7 +91,7 @@ const view = {
           if (!(model.grid[i][j] % view.palette.length)) {
             color = view.palette[0];
           } else {
-            color = view.palette[(model.grid[i][j] + view.shift) % view.palette.length];
+            color = view.palette[(model.grid[i][j] + view.cycle.shift) % view.palette.length];
           }
           img.data[index] = color[0];
           img.data[index + 1] = color[1];
@@ -82,32 +102,9 @@ const view = {
 
       view.context.putImageData(img, 0, 0);
 
-      view.shift++;
+      view.cycle.shift++;
 
-      requestAnimationFrame(view.draw.drawEntire);
-    }
-  },
-
-  delay: {
-    showDelay() {
-      const delayInput = document.querySelector(`#delayInput`);
-
-      view.delaySection.classList.remove(`is-hidden`);
-      delayInput.focus();
-
-      return this;
-    },
-
-    hideDelay() {
-      view.delaySection.classList.add(`is-hidden`);
-
-      return this;
-    }
-  },
-
-  cycle: {
-    colorCycle() {
-      view.draw.drawEntire();
+      requestAnimationFrame(view.cycle.colorCycle);
     }
   }
-};
+}

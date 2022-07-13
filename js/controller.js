@@ -15,7 +15,7 @@ const controller = {
       case `ArrowRight`:
         if (this.speed === 1) {
           clearInterval(this.interval);
-          view.delay.showDelay();
+          view.delay.show();
         }
         break;
       case `NumpadAdd`:
@@ -39,7 +39,7 @@ const controller = {
         break;
       case `Enter`:
         this.delay = e.target.value;
-        view.delay.hideDelay();
+        view.delay.hide();
         this.go();
         break;
     }

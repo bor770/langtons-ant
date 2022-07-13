@@ -70,7 +70,6 @@ const model = {
 
       // Move forward:
       // Turn, increase color, move
-      console.log(this);
       switch (this.#rule[model.grid[this.#x][this.#y] % this.#rule.length]) {
         case '0':
           this.#turnLeft();
