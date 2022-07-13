@@ -32,7 +32,7 @@ const controller = {
           case `keydown`:
             e.target.step = `100`;
             break;
-          case `keyup`: 
+          case `keyup`:
             e.target.step = `10`;
             break;
         }
@@ -47,11 +47,12 @@ const controller = {
 
   speedStep() {
     // step() speed times, but stop at maxPts total, and check border
-    for (let i = 0; i < this.speed && model.points <= model.maxPts && !model.border; i++) {
+    for (let i = 0; i < this.speed && model.points <= model.maxPts && !(model.border && !model.wrap);
+      i++) {
       model.stepEach();
     }
 
-    if (model.points > model.maxPts || model.border) {
+    if (model.points > model.maxPts || (model.border && !model.wrap)) {
       clearInterval(this.interval);
     }
 
