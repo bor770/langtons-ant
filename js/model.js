@@ -98,12 +98,12 @@ const model = {
   },
 
   setup(parameters) {
-    this.maxPts = parameters.maxPts;
-    this.numAnts = parameters.numAnts;
-    this.wrap = parameters.wrap;
-    this.width = parameters.width;
-    this.height = parameters.height;
-    this.grid =
+    model.maxPts = parameters.maxPts;
+    model.numAnts = parameters.numAnts;
+    model.wrap = parameters.wrap;
+    model.width = parameters.width;
+    model.height = parameters.height;
+    model.grid =
       Array.from(new Array(parameters.width), () => Array.from(new Array(parameters.height), () => 0));
 
     // Initialize ants
@@ -115,7 +115,7 @@ const model = {
         y: Math.floor(parameters.height / 2)
       };
 
-      this.ants.push(new this.Ant(antParameters));
+      model.ants.push(new this.Ant(antParameters));
     }
 
     // Initialize view
@@ -125,7 +125,7 @@ const model = {
   },
 
   stepEach() {
-    this.ants.forEach(ant => ant.step());
+    model.ants.forEach(ant => ant.step());
 
     return this;
   }
