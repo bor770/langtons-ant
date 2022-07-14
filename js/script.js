@@ -1,6 +1,6 @@
 "use strict";
 
-addEventListener(`load`, () => {
+function init() {
   const formRule = document.querySelector(`#formRule`);
   const formMax = document.querySelector(`#formMax`);
   const formNum = document.querySelector(`#formNum`);
@@ -61,5 +61,6 @@ addEventListener(`load`, () => {
 
     controller.go();
   });
+}
 
-});
+init();
